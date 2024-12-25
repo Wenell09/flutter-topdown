@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:topdown_store/bloc/product/product_bloc.dart';
 import 'package:topdown_store/bloc/save_userId/save_user_id_bloc.dart';
+import 'package:topdown_store/bloc/select_category_product/select_product_bloc.dart';
 import 'package:topdown_store/bloc/user/user_bloc.dart';
 import 'package:topdown_store/data/model/user_model.dart';
 import 'package:topdown_store/pages/admin_home_page.dart';
+import 'package:topdown_store/pages/admin_item_page.dart';
 import 'package:topdown_store/pages/admin_product_page.dart';
 import 'package:topdown_store/pages/navigation_page.dart';
 
@@ -45,6 +47,9 @@ class DrawerPage extends StatelessWidget {
                 builder: (context) => const AdminProductPage(),
               ));
               context
+                  .read<SelectCategoryProductBloc>()
+                  .add(SelectCategoryProduct(index: 0));
+              context
                   .read<ProductBloc>()
                   .add(GetProductByCategoryId(categoryId: "KT01"));
             },
@@ -53,6 +58,25 @@ class DrawerPage extends StatelessWidget {
               color: Colors.blue,
             ),
             title: const Text("Produk"),
+          ),
+          ListTile(
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (context) => const AdminItemPage(),
+              ));
+              context
+                  .read<SelectCategoryProductBloc>()
+                  .add(SelectCategoryProduct(index: 0));
+              context
+                  .read<ProductBloc>()
+                  .add(GetProductByCategoryId(categoryId: "KT01"));
+            },
+            leading: const Icon(
+              Icons.shopping_basket,
+              color: Colors.blue,
+            ),
+            title: const Text("Item"),
           ),
           ListTile(
             onTap: () {

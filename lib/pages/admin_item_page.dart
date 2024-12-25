@@ -1,38 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:topdown_store/bloc/item/item_bloc.dart';
 import 'package:topdown_store/bloc/product/product_bloc.dart';
 import 'package:topdown_store/bloc/select_category_product/select_product_bloc.dart';
 import 'package:topdown_store/bloc/theme/theme_bloc.dart';
 import 'package:topdown_store/bloc/user/user_bloc.dart';
 import 'package:topdown_store/data/model/product_model.dart';
-import 'package:topdown_store/pages/add_product_page.dart';
+import 'package:topdown_store/pages/admin_detail_item_page.dart';
 import 'package:topdown_store/pages/drawer_page.dart';
-import 'package:topdown_store/pages/edit_product_page.dart';
 import 'package:topdown_store/widgets/shimmer_card.dart';
 
-class AdminProductPage extends StatelessWidget {
-  const AdminProductPage({
-    super.key,
-  });
+class AdminItemPage extends StatelessWidget {
+  const AdminItemPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Produk"),
+        title: const Text("Item"),
         centerTitle: true,
-        actions: [
-          IconButton(
-            padding: const EdgeInsets.only(right: 10),
-            onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => const AddProductPage(),
-            )),
-            icon: const Icon(
-              Icons.add,
-              size: 30,
-            ),
-          )
-        ],
       ),
       drawer: BlocBuilder<UserBloc, UserState>(
         builder: (context, userState) {
@@ -166,14 +152,13 @@ class CardProduct extends StatelessWidget {
         var data = product[index];
         return InkWell(
           borderRadius: BorderRadius.circular(10),
-          onTap: () => Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => EditProductPage(
-              productId: data.productId,
-              productName: data.name,
-              productImage: data.image,
-              categoryId: data.categoryId,
-            ),
-          )),
+          onTap: () {
+            context.read<ItemBloc>().add(GetItem(productId: data.productId));
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) =>
+                  AdminDetailItemPage(productId: data.productId),
+            ));
+          },
           child: Card(
             elevation: 5,
             shadowColor: Colors.black,

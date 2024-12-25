@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:topdown_store/bloc/product/product_bloc.dart';
 import 'package:topdown_store/bloc/select_category/select_category_bloc.dart';
-import 'package:topdown_store/bloc/select_product/select_product_bloc.dart';
+import 'package:topdown_store/bloc/select_category_product/select_product_bloc.dart';
 import 'package:topdown_store/bloc/theme/theme_bloc.dart';
 import 'package:topdown_store/widgets/text_field_custom.dart';
 
@@ -165,8 +165,8 @@ class EditProductPage extends StatelessWidget {
                                 ),
                               ),
                             );
-                            context.read<SelectProductBloc>().add(
-                                  SelectProduct(
+                            context.read<SelectCategoryProductBloc>().add(
+                                  SelectCategoryProduct(
                                     index: (categoryState.categoryId == "KT01")
                                         ? 0
                                         : (categoryState.categoryId == "KT02")
@@ -264,8 +264,10 @@ class EditProductPage extends StatelessWidget {
                                             ),
                                           ),
                                         );
-                                        context.read<SelectProductBloc>().add(
-                                              SelectProduct(
+                                        context
+                                            .read<SelectCategoryProductBloc>()
+                                            .add(
+                                              SelectCategoryProduct(
                                                 index: (categoryState
                                                             .categoryId ==
                                                         "KT01")

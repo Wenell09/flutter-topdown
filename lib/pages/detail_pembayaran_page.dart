@@ -134,72 +134,95 @@ class DetailPembayaranPage extends StatelessWidget {
                               }
                             },
                             child:
-                                BlocBuilder<TransactionBloc, TransactionState>(
-                              builder: (context, state) {
-                                if (state is TransactionLoading) {
-                                  return UnconstrainedBox(
+                                BlocListener<TransactionBloc, TransactionState>(
+                              listener: (context, state) {
+                                if (state is TransactionError) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      content: const Text(
+                                        "Pastikan saldo mencukupi!",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  );
+                                }
+                              },
+                              child: BlocBuilder<TransactionBloc,
+                                  TransactionState>(
+                                builder: (context, state) {
+                                  if (state is TransactionLoading) {
+                                    return UnconstrainedBox(
+                                      child: Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.8,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                            color: Colors.grey,
+                                            borderRadius:
+                                                BorderRadius.circular(50)),
+                                        child: const Center(
+                                            child: CircularProgressIndicator()),
+                                      ),
+                                    );
+                                  }
+                                  return InkWell(
+                                    onTap: () {
+                                      if (data["product"] == "Topay") {
+                                        context.read<TransactionBloc>().add(
+                                              TopUpTopay(
+                                                userId: data["userId"],
+                                                itemId: data["itemId"],
+                                                paymentCategoryId:
+                                                    data["paymentCategoryId"],
+                                                transactionTarget: data["uid"],
+                                              ),
+                                            );
+                                      } else {
+                                        context.read<TransactionBloc>().add(
+                                              AddTransaction(
+                                                userId: data["userId"],
+                                                itemId: data["itemId"],
+                                                paymentCategoryId:
+                                                    data["paymentCategoryId"],
+                                                transactionTarget: data["uid"],
+                                              ),
+                                            );
+                                      }
+                                    },
                                     child: Container(
                                       width: MediaQuery.of(context).size.width *
                                           0.8,
                                       height: 50,
                                       decoration: BoxDecoration(
-                                          color: Colors.grey,
-                                          borderRadius:
-                                              BorderRadius.circular(50)),
-                                      child: const Center(
-                                          child: CircularProgressIndicator()),
-                                    ),
-                                  );
-                                }
-                                return InkWell(
-                                  onTap: () {
-                                    if (data["product"] == "Topay") {
-                                      context.read<TransactionBloc>().add(
-                                            TopUpTopay(
-                                              userId: data["userId"],
-                                              itemId: data["itemId"],
-                                              paymentCategoryId:
-                                                  data["paymentCategoryId"],
-                                              transactionTarget: data["uid"],
-                                            ),
-                                          );
-                                    } else {
-                                      context.read<TransactionBloc>().add(
-                                            AddTransaction(
-                                              userId: data["userId"],
-                                              itemId: data["itemId"],
-                                              paymentCategoryId:
-                                                  data["paymentCategoryId"],
-                                              transactionTarget: data["uid"],
-                                            ),
-                                          );
-                                    }
-                                  },
-                                  child: Container(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.8,
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                      color: (themeState.isDark)
-                                          ? Colors.white
-                                          : Colors.black,
-                                      borderRadius: BorderRadius.circular(50),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        "Bayar Sekarang",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: (themeState.isDark)
-                                              ? Colors.black
-                                              : Colors.white,
-                                          fontSize: 17,
+                                        color: (themeState.isDark)
+                                            ? Colors.white
+                                            : Colors.black,
+                                        borderRadius: BorderRadius.circular(50),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          "Bayar Sekarang",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: (themeState.isDark)
+                                                ? Colors.black
+                                                : Colors.white,
+                                            fontSize: 17,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                );
-                              },
+                                  );
+                                },
+                              ),
                             ),
                           )
                         ],

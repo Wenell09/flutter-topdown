@@ -19,6 +19,21 @@ final class ItemLoaded extends ItemState {
   List<Object?> get props => [item];
 }
 
+final class AddItemSuccess extends ItemState {
+  @override
+  List<Object?> get props => [];
+}
+
+final class EditItemSuccess extends ItemState {
+  @override
+  List<Object?> get props => [];
+}
+
+final class DeleteItemSuccess extends ItemState {
+  @override
+  List<Object?> get props => [];
+}
+
 final class ItemError extends ItemState {
   @override
   List<Object?> get props => [];

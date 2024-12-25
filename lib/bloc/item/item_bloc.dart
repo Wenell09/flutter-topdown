@@ -18,5 +18,46 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
         emit(ItemError());
       }
     });
+    on<AddItem>((event, emit) async {
+      emit(ItemLoading());
+      try {
+        await _itemRepo.addItem(
+          event.name,
+          event.productId,
+          event.price,
+          event.image,
+        );
+        emit(AddItemSuccess());
+        add(GetItem(productId: event.productId));
+      } catch (e) {
+        emit(ItemError());
+      }
+    });
+    on<EditItem>((event, emit) async {
+      emit(ItemLoading());
+      try {
+        await _itemRepo.editItem(
+          event.itemId,
+          event.name,
+          event.productId,
+          event.price,
+          event.image,
+        );
+        emit(EditItemSuccess());
+        add(GetItem(productId: event.productId));
+      } catch (e) {
+        emit(ItemError());
+      }
+    });
+    on<DeleteItem>((event, emit) async {
+      emit(ItemLoading());
+      try {
+        await _itemRepo.deleteItem(event.itemId);
+        emit(DeleteItemSuccess());
+        add(GetItem(productId: event.productId));
+      } catch (e) {
+        emit(ItemError());
+      }
+    });
   }
 }

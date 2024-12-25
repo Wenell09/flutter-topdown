@@ -22,4 +22,81 @@ class ItemRepo {
       return [];
     }
   }
+
+  Future<void> addItem(
+    String name,
+    String productId,
+    int price,
+    String image,
+  ) async {
+    try {
+      final Map<String, dynamic> data = {
+        "name": name,
+        "product_id": productId,
+        "price": price,
+        "image": image,
+      };
+      final response = await http.post(
+        Uri.parse("$baseUrl/addItem"),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(data),
+      );
+      if (response.statusCode == 200) {
+        debugPrint(response.body);
+      } else {
+        debugPrint(response.body);
+        throw Exception(response.body);
+      }
+    } catch (e) {
+      debugPrint("error add item:$e");
+      rethrow;
+    }
+  }
+
+  Future<void> editItem(
+    String itemId,
+    String name,
+    String productId,
+    int price,
+    String image,
+  ) async {
+    try {
+      final Map<String, dynamic> data = {
+        "name": name,
+        "product_id": productId,
+        "price": price,
+        "image": image,
+      };
+      final response = await http.patch(
+        Uri.parse("$baseUrl/editItem/$itemId"),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(data),
+      );
+      if (response.statusCode == 200) {
+        debugPrint(response.body);
+      } else {
+        debugPrint(response.body);
+        throw Exception(response.body);
+      }
+    } catch (e) {
+      debugPrint("error edit item:$e");
+      rethrow;
+    }
+  }
+
+  Future<void> deleteItem(String itemId) async {
+    try {
+      final response =
+          await http.delete(Uri.parse("$baseUrl/deleteItem/$itemId"));
+      if (response.statusCode == 200) {
+        debugPrint(response.body);
+      } else {
+        debugPrint(response.body);
+        throw Exception(response.body);
+      }
+    } catch (e) {
+      debugPrint("error delete item:$e");
+      rethrow;
+    }
+  }
 }

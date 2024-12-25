@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:topdown_store/bloc/item/item_bloc.dart';
 import 'package:topdown_store/bloc/product/product_bloc.dart';
 import 'package:topdown_store/bloc/save_userId/save_user_id_bloc.dart';
-import 'package:topdown_store/bloc/select_product/select_product_bloc.dart';
+import 'package:topdown_store/bloc/select_category_product/select_product_bloc.dart';
 import 'package:topdown_store/bloc/theme/theme_bloc.dart';
 import 'package:topdown_store/bloc/user/user_bloc.dart';
 import 'package:topdown_store/pages/splash_page.dart';
+import 'package:topdown_store/repository/item_repo.dart';
 import 'package:topdown_store/repository/product_repo.dart';
 import 'package:topdown_store/repository/user_repo.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -37,10 +39,13 @@ class MyApp extends StatelessWidget {
           create: (context) => ProductBloc(ProductRepo()),
         ),
         BlocProvider(
+          create: (context) => ItemBloc(ItemRepo()),
+        ),
+        BlocProvider(
           create: (context) => ThemeBloc()..add(LoadTheme()),
         ),
         BlocProvider(
-          create: (context) => SelectProductBloc(),
+          create: (context) => SelectCategoryProductBloc(),
         )
       ],
       child: BlocListener<SaveUserIdBloc, SaveUserIdState>(

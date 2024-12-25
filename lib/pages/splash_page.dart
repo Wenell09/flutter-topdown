@@ -36,35 +36,17 @@ class SplashPage extends StatelessWidget {
         backgroundColor: const Color(0xFFECECED),
         body: Center(
           child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(bottom: 50),
-                  width: 180,
-                  height: 180,
-                  decoration: BoxDecoration(
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.circular(10),
-                    image: const DecorationImage(
-                      image: AssetImage("image/logo.png"),
-                    ),
-                  ),
+            child: Container(
+              margin: const EdgeInsets.only(bottom: 50),
+              width: 180,
+              height: 180,
+              decoration: BoxDecoration(
+                color: Colors.grey,
+                borderRadius: BorderRadius.circular(10),
+                image: const DecorationImage(
+                  image: AssetImage("image/logo.png"),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const Text(
-                  "Selamat datang di Topdown Store!",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 17,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
         ),
