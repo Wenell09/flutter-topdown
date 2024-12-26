@@ -7,7 +7,7 @@ import 'package:topdown_store/bloc/select_item/select_item_bloc.dart';
 import 'package:topdown_store/bloc/select_payment/select_payment_bloc.dart';
 import 'package:topdown_store/bloc/theme/theme_bloc.dart';
 import 'package:topdown_store/bloc/user/user_bloc.dart';
-import 'package:topdown_store/pages/detail_pembayaran_page.dart';
+import 'package:topdown_store/pages/detail_payment_page.dart';
 import 'package:topdown_store/repository/item_repo.dart';
 import 'package:topdown_store/repository/payment_category_repo.dart';
 
@@ -394,7 +394,7 @@ class DetailPage extends StatelessWidget {
                                                   Navigator.of(context)
                                                       .push(MaterialPageRoute(
                                                     builder: (context) =>
-                                                        DetailPembayaranPage(
+                                                        DetailPaymentPage(
                                                             data: {
                                                           "userId": userState
                                                               .user[0].userId,

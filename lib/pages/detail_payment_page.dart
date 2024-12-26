@@ -5,9 +5,9 @@ import 'package:topdown_store/bloc/transaction/transaction_bloc.dart';
 import 'package:topdown_store/pages/transaction_success_page.dart';
 import 'package:topdown_store/repository/transaction_repo.dart';
 
-class DetailPembayaranPage extends StatelessWidget {
+class DetailPaymentPage extends StatelessWidget {
   final Map<String, dynamic> data;
-  const DetailPembayaranPage({
+  const DetailPaymentPage({
     super.key,
     required this.data,
   });

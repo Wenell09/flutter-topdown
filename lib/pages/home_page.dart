@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
@@ -12,6 +13,10 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<String> imagePath = [
+      "image/banner.jpg",
+      "image/banner2.jpg",
+    ];
     return BlocProvider(
       create: (context) => ProductBloc(ProductRepo())
         ..add(GetProductGames(categoryId: "KT01"))
@@ -32,19 +37,29 @@ class HomePage extends StatelessWidget {
             } else if (state is ProductLoaded) {
               return ListView(
                 children: [
-                  UnconstrainedBox(
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.9,
+                  CarouselSlider(
+                    options: CarouselOptions(
                       height: 170,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        image: const DecorationImage(
-                          image: AssetImage("image/banner.jpg"),
-                          fit: BoxFit.fill,
-                        ),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
+                      autoPlay: true,
+                      enlargeCenterPage: true,
+                      enableInfiniteScroll: true,
+                      autoPlayInterval: const Duration(seconds: 3),
+                      viewportFraction: 0.9,
                     ),
+                    items: imagePath.map((imagePath) {
+                      return Container(
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        height: 170,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          image: DecorationImage(
+                            image: AssetImage(imagePath),
+                            fit: BoxFit.fill,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      );
+                    }).toList(),
                   ),
                   const SizedBox(
                     height: 20,
@@ -187,7 +202,7 @@ class ProductCard extends StatelessWidget {
                 ),
               );
             },
-            itemCount: (product.length > 3) ? 3 : product.length,
+            itemCount: (product.length > 5) ? 6 : product.length,
           ),
         )
       ],

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:topdown_store/bloc/save_userId/save_user_id_bloc.dart';
 import 'package:topdown_store/bloc/theme/theme_bloc.dart';
+import 'package:topdown_store/bloc/transaction/transaction_bloc.dart';
 import 'package:topdown_store/bloc/user/user_bloc.dart';
 import 'package:topdown_store/pages/account_setting.dart';
 import 'package:topdown_store/pages/history_transaction.dart';
@@ -102,12 +103,13 @@ class ProfilePage extends StatelessWidget {
                         ),
                         const Divider(),
                         ListTile(
-                          onTap: () =>
-                              Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => HistoryTransaction(
-                              userId: userState.user[0].userId,
-                            ),
-                          )),
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const HistoryTransaction(),
+                            ));
+                            context.read<TransactionBloc>().add(GetTransaction(
+                                userId: userState.user[0].userId));
+                          },
                           leading: const Icon(
                             Icons.history,
                             color: Colors.blue,

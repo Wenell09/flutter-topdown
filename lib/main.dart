@@ -6,10 +6,12 @@ import 'package:topdown_store/bloc/product/product_bloc.dart';
 import 'package:topdown_store/bloc/save_userId/save_user_id_bloc.dart';
 import 'package:topdown_store/bloc/select_category_product/select_product_bloc.dart';
 import 'package:topdown_store/bloc/theme/theme_bloc.dart';
+import 'package:topdown_store/bloc/transaction/transaction_bloc.dart';
 import 'package:topdown_store/bloc/user/user_bloc.dart';
 import 'package:topdown_store/pages/splash_page.dart';
 import 'package:topdown_store/repository/item_repo.dart';
 import 'package:topdown_store/repository/product_repo.dart';
+import 'package:topdown_store/repository/transaction_repo.dart';
 import 'package:topdown_store/repository/user_repo.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
@@ -34,6 +36,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => UserBloc(UserRepo()),
+        ),
+        BlocProvider(
+          create: (context) => TransactionBloc(TransactionRepo()),
         ),
         BlocProvider(
           create: (context) => ProductBloc(ProductRepo()),

@@ -3,11 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:topdown_store/bloc/product/product_bloc.dart';
 import 'package:topdown_store/bloc/save_userId/save_user_id_bloc.dart';
 import 'package:topdown_store/bloc/select_category_product/select_product_bloc.dart';
+import 'package:topdown_store/bloc/transaction/transaction_bloc.dart';
 import 'package:topdown_store/bloc/user/user_bloc.dart';
 import 'package:topdown_store/data/model/user_model.dart';
 import 'package:topdown_store/pages/admin_home_page.dart';
 import 'package:topdown_store/pages/admin_item_page.dart';
 import 'package:topdown_store/pages/admin_product_page.dart';
+import 'package:topdown_store/pages/admin_transaction_page.dart';
 import 'package:topdown_store/pages/navigation_page.dart';
 
 class DrawerPage extends StatelessWidget {
@@ -54,7 +56,7 @@ class DrawerPage extends StatelessWidget {
                   .add(GetProductByCategoryId(categoryId: "KT01"));
             },
             leading: const Icon(
-              Icons.store_mall_directory,
+              Icons.shopping_bag,
               color: Colors.blue,
             ),
             title: const Text("Produk"),
@@ -73,10 +75,25 @@ class DrawerPage extends StatelessWidget {
                   .add(GetProductByCategoryId(categoryId: "KT01"));
             },
             leading: const Icon(
-              Icons.shopping_basket,
+              Icons.list,
               color: Colors.blue,
             ),
             title: const Text("Item"),
+          ),
+          ListTile(
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (context) =>
+                    AdminTransactionPage(adminId: data.userId),
+              ));
+              context.read<TransactionBloc>().add(GetTransaction(userId: ""));
+            },
+            leading: const Icon(
+              Icons.credit_card,
+              color: Colors.blue,
+            ),
+            title: const Text("Transaksi"),
           ),
           ListTile(
             onTap: () {

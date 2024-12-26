@@ -3,85 +3,96 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:topdown_store/bloc/transaction/transaction_bloc.dart';
-import 'package:topdown_store/repository/transaction_repo.dart';
+import 'package:topdown_store/pages/detail_transaction_page.dart';
 
 class HistoryTransaction extends StatelessWidget {
-  final String userId;
-  const HistoryTransaction({super.key, required this.userId});
+  const HistoryTransaction({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => TransactionBloc(TransactionRepo())
-        ..add(GetTransaction(userId: userId)),
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text("Riwayat Transaksi"),
-          centerTitle: true,
-        ),
-        body: BlocBuilder<TransactionBloc, TransactionState>(
-          builder: (context, state) {
-            if (state is TransactionLoading) {
-              return const ShimmerLoading();
-            } else if (state is TransactionLoaded) {
-              if (state.transaction.isEmpty) {
-                return const Center(
-                  child: Text(
-                    "Daftar transaksi kosong!",
-                    style: TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.bold,
-                    ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Riwayat Transaksi"),
+        centerTitle: true,
+      ),
+      body: BlocBuilder<TransactionBloc, TransactionState>(
+        builder: (context, state) {
+          if (state is TransactionLoading) {
+            return const ShimmerLoading();
+          } else if (state is TransactionLoaded) {
+            if (state.transaction.isEmpty) {
+              return const Center(
+                child: Text(
+                  "Daftar transaksi kosong!",
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
                   ),
-                );
-              }
-              final transactions = state.transaction;
-              return ListView.builder(
+                ),
+              );
+            }
+            final transactions = state.transaction;
+            return RefreshIndicator(
+              backgroundColor: Colors.black,
+              color: Colors.blue,
+              displacement: 50,
+              onRefresh: () async {
+                context
+                    .read<TransactionBloc>()
+                    .add(GetTransaction(userId: transactions[0].userId));
+              },
+              child: ListView.builder(
                 itemCount: transactions.length,
                 itemBuilder: (context, index) {
                   final transaction = transactions[index];
-                  return Card(
-                    margin:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    elevation: 3,
-                    child: ListTile(
-                      leading: Image.network(
-                        transaction.productImage,
-                        width: 50,
-                        height: 50,
-                        fit: BoxFit.cover,
-                      ),
-                      title: Text(
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        transaction.itemName,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Rp.${transaction.itemPrice}"),
-                          Text(
-                              "Tanggal Pembelian: \n${formatTanggal(transaction.createdAt)}"),
-                        ],
-                      ),
-                      trailing: Text(
-                        transaction.status,
-                        style: TextStyle(
-                          color: (transaction.status == "sedang diproses")
-                              ? Colors.orange
-                              : Colors.green,
-                          fontWeight: FontWeight.bold,
+                  return InkWell(
+                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>
+                          DetailTransactionPage(transaction: transaction),
+                    )),
+                    child: Card(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 5),
+                      elevation: 3,
+                      child: ListTile(
+                        leading: Image.network(
+                          transaction.productImage,
+                          width: 50,
+                          height: 50,
+                          fit: BoxFit.cover,
+                        ),
+                        title: Text(
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          transaction.itemName,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Rp.${transaction.itemPrice}"),
+                            Text(
+                                "Tanggal Pembelian: \n${formatTanggal(transaction.createdAt)}"),
+                          ],
+                        ),
+                        trailing: Text(
+                          transaction.status,
+                          style: TextStyle(
+                            color: (transaction.status == "sedang diproses")
+                                ? Colors.orange
+                                : Colors.green,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
                   );
                 },
-              );
-            }
-            return const ShimmerLoading();
-          },
-        ),
+              ),
+            );
+          }
+          return const ShimmerLoading();
+        },
       ),
     );
   }

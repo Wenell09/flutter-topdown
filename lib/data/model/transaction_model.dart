@@ -1,7 +1,9 @@
 class TransactionModel {
   final String transactionId,
+      userId,
       username,
       email,
+      itemId,
       itemName,
       productName,
       productImage,
@@ -14,8 +16,10 @@ class TransactionModel {
 
   TransactionModel({
     required this.transactionId,
+    required this.userId,
     required this.username,
     required this.email,
+    required this.itemId,
     required this.itemName,
     required this.itemPrice,
     required this.productName,
@@ -32,8 +36,10 @@ class TransactionModel {
   factory TransactionModel.fromJson(Map<String, dynamic> json) {
     return TransactionModel(
       transactionId: json['transaction_id'] ?? "",
+      userId: json["user_id"] ?? "",
       username: json['username'] ?? "",
       email: json['email'] ?? "",
+      itemId: json["item_id"] ?? "",
       itemName: json['item_name'] ?? "",
       itemPrice: json['item_price'] ?? 0,
       productName: json['product_name'] ?? "",

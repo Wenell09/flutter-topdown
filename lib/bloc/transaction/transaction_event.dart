@@ -42,3 +42,30 @@ class GetTransaction extends TransactionEvent {
   @override
   List<Object?> get props => [userId];
 }
+
+class ConfirmTransaction extends TransactionEvent {
+  final String userId, transactionId;
+  ConfirmTransaction({
+    required this.userId,
+    required this.transactionId,
+  });
+  @override
+  List<Object?> get props => [userId, transactionId];
+}
+
+class ConfirmTopUpTopay extends TransactionEvent {
+  final String userId, transactionId, adminId, itemId;
+  ConfirmTopUpTopay({
+    required this.userId,
+    required this.transactionId,
+    required this.adminId,
+    required this.itemId,
+  });
+  @override
+  List<Object?> get props => [
+        userId,
+        transactionId,
+        adminId,
+        itemId,
+      ];
+}

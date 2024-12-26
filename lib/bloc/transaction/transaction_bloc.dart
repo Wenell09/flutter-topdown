@@ -42,5 +42,27 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
         emit(TransactionError());
       }
     });
+    on<ConfirmTransaction>((event, emit) async {
+      emit(TransactionLoading());
+      try {
+        await _transactionRepo.confirmTransaction(
+            event.userId, event.transactionId);
+        emit(ConfirmTransactionSuccess());
+        add(GetTransaction(userId: ""));
+      } catch (e) {
+        emit(TransactionError());
+      }
+    });
+    on<ConfirmTopUpTopay>((event, emit) async {
+      emit(TransactionLoading());
+      try {
+        await _transactionRepo.confirmTopUpTopay(
+            event.userId, event.transactionId, event.adminId, event.itemId);
+        emit(ConfirmTopUpTopaySuccess());
+        add(GetTransaction(userId: ""));
+      } catch (e) {
+        emit(TransactionError());
+      }
+    });
   }
 }
