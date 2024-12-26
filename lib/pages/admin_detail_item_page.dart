@@ -55,6 +55,7 @@ class AdminDetailItemPage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: GridView.builder(
+                        physics: const ScrollPhysics(),
                         shrinkWrap: true,
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(

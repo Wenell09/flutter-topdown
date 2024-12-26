@@ -158,7 +158,7 @@ class SearchPage extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: GridView.builder(
                         shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
+                        physics: const ScrollPhysics(),
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 3, // Empat item dalam satu baris
