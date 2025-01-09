@@ -62,9 +62,14 @@ class DetailPage extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            background: Image.network(
-                              state.item[0].productImage,
-                              fit: BoxFit.cover,
+                            background: ColorFiltered(
+                              colorFilter: ColorFilter.mode(
+                                  Colors.black.withOpacity(0.7),
+                                  BlendMode.dstATop),
+                              child: Image.network(
+                                state.item[0].productImage,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                         ),
