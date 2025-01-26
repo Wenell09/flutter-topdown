@@ -1,16 +1,13 @@
 # topdown_store
+Topdown adalah Aplikasi penjualan top up game dan kategori lainnya. Aplikasi ini dibuat untuk memenuhi tugas projek matakuliah mobile programming. Proses top up hanya fiktif saja yaitu hanya proses CRUD saja.
+Fitur-Fitur yang ada di topdown:
+<li>Login</li>
+<li>Register</li>
+<li>List produk kategori game dll<li>
+<li>Detail Produk dan list item sebuah produk yang ingin dibeli</li>
+<li>Cari Produk</li>
+<li>Riwayat dan detail Pembelian</li>
+<li>Dashboard Admin</li>
+<li>CRUD produk dan item khusus admin</li>
+<li>Lihat semua transaksi atau pembelian user</li>
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
